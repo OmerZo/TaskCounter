@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,9 +32,14 @@ public class MainActivity extends AppCompatActivity {
     public void addTask(View view) {
         EditText etNewTask = (EditText)findViewById(R.id.etNewTask);
         String taskName = etNewTask.getText().toString();
-        handler.insert(new Task(0, taskName, 0));
-        Task task = handler.getByName(taskName);
-        adapter.add(task);
+        if(!handler.checkIfExist(taskName)){
+            handler.insert(new Task(0, taskName, 0));
+            Task task = handler.getByName(taskName);
+            adapter.add(task);
+            etNewTask.setText("");
+        } else {
+            Toast.makeText(this, "This task already exist", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

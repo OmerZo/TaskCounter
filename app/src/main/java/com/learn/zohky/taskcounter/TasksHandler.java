@@ -43,7 +43,7 @@ public class TasksHandler {
 
     public Task getByName(String name){
         SQLiteDatabase db = helper.getReadableDatabase();
-        String getById = "SELECT * FROM " + DbHelper.TABLE_NAME + " WHERE " + DbHelper.TASK_NAME + " = " + name;
+        String getById = "SELECT * FROM " + DbHelper.TABLE_NAME + " WHERE " + DbHelper.TASK_NAME + " = '" + name + "';";
         Cursor cursor = db.rawQuery(getById, null);
         cursor.moveToNext();
         Task task = createTask(cursor);
@@ -61,6 +61,17 @@ public class TasksHandler {
         db.execSQL(updateCount);
         db.close();
         helper.close();
+    }
+
+    public boolean checkIfExist(String name){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String checkIfExist = "SELECT * FROM " + DbHelper.TABLE_NAME + " WHERE " + DbHelper.TASK_NAME + " = '" + name + "';";
+        Cursor cursor = db.rawQuery(checkIfExist, null);
+        boolean flag = cursor.moveToFirst();
+        cursor.close();
+        db.close();
+        helper.close();
+        return flag;
     }
 
     @NonNull
