@@ -3,7 +3,10 @@ package com.learn.zohky.taskcounter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public void addTask(View view) {
         EditText etNewTask = (EditText)findViewById(R.id.etNewTask);
         String taskName = etNewTask.getText().toString();
-        if(!handler.checkIfExist(taskName)){
+        if((!handler.checkIfExist(taskName)) && (!taskName.isEmpty())){
             handler.insert(new Task(0, taskName, 0));
             Task task = handler.getByName(taskName);
             adapter.add(task);
@@ -52,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
             TextView tvCount = (TextView)childAt.findViewById(R.id.tvTaskCount);
             handler.updateCount(new Task(0,tvTaskName.getText().toString(), Integer.valueOf(tvCount.getText().toString())));
         }
+    }
+
+    public void deleteTask(View view) {
+        ImageButton ibDelete = (ImageButton)view;
+        Task task = (Task) ibDelete.getTag();
+        handler.deleteTask(task);
+        adapter.remove(task);
     }
 }
 /*

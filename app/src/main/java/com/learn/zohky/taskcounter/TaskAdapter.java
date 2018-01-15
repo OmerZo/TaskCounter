@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -35,8 +36,10 @@ public class TaskAdapter extends ArrayAdapter<Task> implements View.OnClickListe
         TextView tvTaskName = (TextView) convertView.findViewById(R.id.tvTaskName);
         TextView tvTaskCount = (TextView) convertView.findViewById(R.id.tvTaskCount);
         tvTaskName.setText(task.getTaskName());
-        tvTaskCount.setText(task.getTaskCount() + "");
+        tvTaskCount.setText(String.valueOf(task.getTaskCount()));
         Button bAdd = (Button)convertView.findViewById(R.id.bAdd);
+        ImageButton ibDelete = (ImageButton)convertView.findViewById(R.id.ibDelete);
+        ibDelete.setTag(task);
         bAdd.setTag(task);
         bAdd.setOnClickListener(this);
 

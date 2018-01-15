@@ -74,6 +74,15 @@ public class TasksHandler {
         return flag;
     }
 
+    public void deleteTask(Task task){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String deleteTask =
+                "DELETE FROM " + DbHelper.TABLE_NAME + " WHERE " + DbHelper.ID + " = " + task.getId() + ";";
+        db.execSQL(deleteTask);
+        db.close();
+        helper.close();
+    }
+
     @NonNull
     private Task createTask(Cursor cursor){
         return new Task(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
